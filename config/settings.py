@@ -48,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
  
 ROOT_URLCONF = 'config.urls'
@@ -128,7 +129,7 @@ TAX_RATE = 0.1
  
 # Stripe API Key
 STRIPE_API_SECRET_KEY = "sk_test_51Kj4oeH2WRYYC5PMHnbkTVvcB2s7A70mfCThHlyrtJMz43sBgIuONXAFvGDGnUBj3qVbkioOrYtrTVJjkj5D6nT900pj19avnE"
- 
+
 # Custom User Model
 AUTH_USER_MODEL = 'base.User'
  
