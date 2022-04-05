@@ -2,7 +2,6 @@ from pathlib import Path
 import environ  # postscript
 from django.contrib import messages # postscript
 import os
-import dj_database_url
  
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,11 +23,9 @@ env.read_env(root('.env.dev'))
 SECRET_KEY = "django-insecure-l3rjja@k@u0_*u4s1l*6yqv7x6*kht5xh&q%kbkpyd86z9l_*o"
  
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
  
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'tickkun-market.herokuapp.com']
-
-db_from_env = dj_database_url.config()
  
  
 # Application definition
@@ -45,14 +42,13 @@ INSTALLED_APPS = [
  
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
  
 ROOT_URLCONF = 'config.urls'
@@ -81,7 +77,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
  
 DATABASES = {
-    'default': dj_database_url.config()
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
  
  
@@ -126,8 +125,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 ) 
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
  
 # TAX_RATE
 TAX_RATE = 0.1
