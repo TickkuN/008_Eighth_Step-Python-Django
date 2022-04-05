@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+ 
+{% block main %}
+ 
+<div class="container my-5">
+  <div class="row">
+    <div class="col-12">
+      <h1>Order</h1>
+      <h2 class="my-4">Order Information</h2>
+      <table class="table mb-5">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">No.</th>
+            <td>{{object.pk}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Amount of money</th>
+            <td>{{object.amount}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Tax included</th>
+            <td>{{object.tax_included}}</td>
+          </tr>
+ 
+          <tr>
+            <th scope="row">Order Confirmation Date</th>
+            <td>{{object.created_at|date:"Y-m-d f"}}</td>
+          </tr>
+          <tr>
+            <th scope="row">UID</th>
+            <td>{{object.uid}}</td>
+          </tr>
+          <tr>
+            <th scope="row">ZIP code</th>
+            <td>{{shipping.0.fields.zipcode}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Prefecture</th>
+            <td>{{shipping.0.fields.prefecture}}</td>
+          </tr>
+          <tr>
+            <th scope="row">City</th>
+            <td>{{shipping.0.fields.city}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Address1</th>
+            <td>{{shipping.0.fields.address1}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Address2</th>
+            <td>{{shipping.0.fields.address2}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Phone number</th>
+            <td>{{shipping.0.fields.tel}}</td>
+          </tr>
+        </tbody>
+      </table>
+ 
+ 
+      <h2 class="my-4">Order status</h2>
+      <div>
+        {% if object.shipped_at %}
+        <div class="my-3 ">
+          <button class="btn btn-primary" disabled>Already shipped: {{object.shipped_at}}</button>
+        </div>
+        {% else %}
+        <div class="my-3 ">
+          <button class="btn btn-secondary" disabled>Unshipped</button>
+        </div>
+        {% endif %}
+        {% if object.canceled_at %}
+        <div class="my-3 ">
+          <button class="btn btn-danger" disabled>Cancelled: {{object.canceled_at}}</button>
+        </div>
+        {% endif %}
+      </div>
+ 
+      <h2 class="my-4">Order Items List</h2>
+      <table class="table mb-5">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Image</th>
+            <th scope="col">Item name</th>
+            <th scope="col">Unit price</th>
+            <th scope="col">Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td><img src="/{{item.image}}" width="auto" height="100px"></td>
+            <td>{{ item.name }}</td>
+            <td>¥{{item.price}}</td>
+            <td>{{item.quantity}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+ 
+{% endblock %}
