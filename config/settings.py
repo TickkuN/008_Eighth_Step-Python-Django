@@ -20,7 +20,7 @@ env.read_env(root('.env.dev'))
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
  
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env.str('SECRET_KEY')
+SECRET_KEY = "django-insecure-l3rjja@k@u0_*u4s1l*6yqv7x6*kht5xh&q%kbkpyd86z9l_*o"
  
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -127,7 +127,7 @@ STATICFILES_DIRS = [BASE_DIR / 'static']  # postscript
 TAX_RATE = 0.1
  
 # Stripe API Key
-STRIPE_API_SECRET_KEY = env.str('STRIPE_API_SECRET_KEY')
+STRIPE_API_SECRET_KEY = "sk_test_51Kj4oeH2WRYYC5PMHnbkTVvcB2s7A70mfCThHlyrtJMz43sBgIuONXAFvGDGnUBj3qVbkioOrYtrTVJjkj5D6nT900pj19avnE"
  
 # Schema & Domain
 MY_URL = env.str('MY_URL')
