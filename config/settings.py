@@ -2,6 +2,8 @@ from pathlib import Path
 import environ  # postscript
 from django.contrib import messages # postscript
 import os
+import dj_database_url
+import django_heroku
  
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +22,12 @@ env.read_env(root('.env.dev'))
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
  
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-l3rjja@k@u0_*u4s1l*6yqv7x6*kht5xh&q%kbkpyd86z9l_*o"
+SECRET_KEY = env.str('SECRET_KEY')
  
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DEBUG')
  
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'tickkun-market.herokuapp.com']
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
  
  
 # Application definition
@@ -38,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'base',  # postscript
+    'storages'
 ]
  
 MIDDLEWARE = [
@@ -75,13 +78,28 @@ WSGI_APPLICATION = 'config.wsgi.application'
  
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
- 
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'name',
+        'USER': 'user',
+        'PASSWORD': '',
+        'HOST': 'host',
+        'PORT': '',
     }
 }
+
+db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
+DATABASES['default'].update(db_from_env)
  
  
 # Password validation
@@ -119,20 +137,21 @@ USE_TZ = True
  
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 # postscript
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-) 
- 
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+] 
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # TAX_RATE
 TAX_RATE = 0.1
  
 # Stripe API Key
-STRIPE_API_SECRET_KEY = "sk_test_51Kj4oeH2WRYYC5PMHnbkTVvcB2s7A70mfCThHlyrtJMz43sBgIuONXAFvGDGnUBj3qVbkioOrYtrTVJjkj5D6nT900pj19avnE"
+STRIPE_API_SECRET_KEY = env.str('STRIPE_API_SECRET_KEY')
 
-MY_URL = 'https://tickkun-market.herokuapp.com'
+# Schema & Domain
+MY_URL = env.str('MY_URL')
 
 # Custom User Model
 AUTH_USER_MODEL = 'base.User'
@@ -155,10 +174,7 @@ MESSAGE_TAGS = {
     messages.DEBUG: 'rounded-0 alert alert-secondary',
 }
  
- 
 # custom_context_processors
 TITLE = 'TickkuN Market'
 
-# postscript
-if os.getcwd() == '/app':
-    DEBUG = False
+django_heroku.settings(locals())
