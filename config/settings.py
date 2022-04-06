@@ -2,11 +2,10 @@ from pathlib import Path
 import environ  # postscript
 from django.contrib import messages # postscript
 import os
-import django_heroku
  
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
- 
+
 # postscript
 env = environ.Env()
 root = environ.Path(BASE_DIR / 'secrets')
@@ -133,7 +132,7 @@ TAX_RATE = 0.1
 # Stripe API Key
 STRIPE_API_SECRET_KEY = "sk_test_51Kj4oeH2WRYYC5PMHnbkTVvcB2s7A70mfCThHlyrtJMz43sBgIuONXAFvGDGnUBj3qVbkioOrYtrTVJjkj5D6nT900pj19avnE"
 
-MY_URL = 'http://127.0.0.1:8000'
+MY_URL = 'https://tickkun-market.herokuapp.com'
 
 # Custom User Model
 AUTH_USER_MODEL = 'base.User'
@@ -163,5 +162,3 @@ TITLE = 'TickkuN Market'
 # postscript
 if os.getcwd() == '/app':
     DEBUG = False
-
-django_heroku.settings(locals())
