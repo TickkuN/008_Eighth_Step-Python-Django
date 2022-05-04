@@ -1,5 +1,5 @@
 # 1.Please enjoy my app
-https://tickkun.pythonanywhere.com/  
+<a href = "https://tickkun.pythonanywhere.com/" target = "_blank"> TickkuN Market </a>  
 
 <img src="imgs/001.png">
 <img src="imgs/002.png">
